@@ -29,16 +29,16 @@ import {
 
 export default function CepScreen() {
 
-  // --- Efeito para Esconder a Barra de Baixo ---
+  
   useEffect(() => {
     if (Platform.OS === 'android') {
-      // Esconde a barra nativa do Android
+    
       NavigationBar.setVisibilityAsync("hidden");
-      // Faz com que ela apareça temporariamente se o usuário arrastar a tela pra cima
+     
       NavigationBar.setBehaviorAsync("overlay-swipe");
     }
   }, []);
-  // ---------------------------------------------
+
 
   return (
     <Container>
