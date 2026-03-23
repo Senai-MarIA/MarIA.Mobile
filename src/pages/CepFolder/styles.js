@@ -74,7 +74,7 @@ export const TopLeafSvg = styled(Svg).attrs({
 
 export const BottomLeafWrapper = styled.View`
   position: absolute;
-  bottom: 220px; 
+  bottom: 110px; 
   right: 30px; 
   z-index: 2;
   
