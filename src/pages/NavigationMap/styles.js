@@ -29,3 +29,19 @@ export const DarkGreenBottomSvg = styled(Svg).attrs({
   width: ${width}px;
   height: 168px;
 `;
+
+export const LightWaveBottomWrapper = styled.View`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+`;
+
+export const LightGreenBottomSvg = styled(Svg).attrs({
+  viewBox: '0 0 430 121',
+  preserveAspectRatio: 'none',
+})`
+  width: ${width}px;
+  height: 121px;
+`;
