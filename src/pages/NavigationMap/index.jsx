@@ -1,6 +1,6 @@
 import React from 'react';
 import { Path } from 'react-native-svg';
-import { Image } from 'react-native';
+import { Image,Text } from 'react-native';
 import {
   PanelWrapper,
   MiddleContainer,
@@ -22,28 +22,55 @@ import {
   UserName,
   AddressTitle,
   AddressSubtitle,
+  CurrentAddressContainer,
+  AddressTextWrapper,
+  CurrentAddressLabel,
+  CurrentAddressValue,
+  RouteButton,
 } from './styles.js';
 
 export default function BottomPanel() {
   return (
     <PanelWrapper>
-      
-     
+
+
       <MiddleContainer>
         <TagsRow>
           <TagCataBagulho>
-            <TagCataBagulhoText>🚚 Cata-Bagulho</TagCataBagulhoText>
+            <Image
+              source={require('../../assets/CataBagulho.png')}
+              style={{ width: 16, height: 16 }}
+            />
+            <TagCataBagulhoText> Cata-Bagulho</TagCataBagulhoText>
           </TagCataBagulho>
 
           <TagLixoEletronico>
-            <TagLixoEletronicoText>🔋 Lixo Eletrônico</TagLixoEletronicoText>
+            <Image
+              source={require('../../assets/batery.png')}
+              style={{ width: 16, height: 16 }}
+            />
+            <TagLixoEletronicoText> Lixo Eletrônico</TagLixoEletronicoText>
           </TagLixoEletronico>
         </TagsRow>
-        
-       
+
+        <CurrentAddressContainer>
+          <AddressTextWrapper>
+            <CurrentAddressLabel>Endereço atual</CurrentAddressLabel>
+            <CurrentAddressValue>Av. Giovanni Gronchi, 5910</CurrentAddressValue>
+          </AddressTextWrapper>
+
+          <RouteButton activeOpacity={0.8}>
+            <Image
+              source={require('../../assets/Route.png')}
+              style={{ width: 24, height: 24 }}
+            />
+          </RouteButton>
+        </CurrentAddressContainer>
+
+
       </MiddleContainer>
 
-     
+
       <GreenFooterContainer>
         <DarkWaveBottomWrapper>
           <DarkGreenBottomSvg>

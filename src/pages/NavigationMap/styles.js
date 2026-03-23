@@ -57,6 +57,39 @@ export const TagLixoEletronicoText = styled.Text`
   margin-left: 4px;
 `;
 
+
+export const CurrentAddressContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px; 
+`;
+
+export const AddressTextWrapper = styled.View`
+  flex: 1; 
+  margin-right: 16px; 
+`;
+
+export const CurrentAddressLabel = styled.Text`
+  color: #828282; 
+  font-size: 14px;
+`;
+
+export const CurrentAddressValue = styled.Text`
+  color: #333333; 
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 4px;
+`;
+
+export const RouteButton = styled.TouchableOpacity` 
+  width: 48px;
+  height: 48px;
+  border-radius: 24px; 
+  justify-content: center;
+  align-items: center;
+`;
+
 export const GreenFooterContainer = styled.View`
   width: 100%;
   height: 168px; 
