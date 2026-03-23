@@ -131,14 +131,14 @@ export const Input = styled.TextInput.attrs({
 export const Button = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
 })`
-  background-color: #c4a6f9;
+  background-color: #CFC0FE;
   height: 45px;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
   align-self: center; 
   padding: 0 40px;
-  top: 30px;
+  top: 79px;
   
 `;
 
