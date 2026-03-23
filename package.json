@@ -14,7 +14,9 @@
     "expo-status-bar": "~55.0.4",
     "react": "19.2.0",
     "react-native": "0.83.2",
+    "react-native-maps": "^1.27.2",
     "react-native-svg": "^15.15.4",
+    "react-native-webview": "^13.16.1",
     "styled-components": "^6.3.11"
   },
   "private": true

@@ -4,7 +4,19 @@ import { Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
+export const ScreenContainer = styled.View`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #F5F5F5;
+`;
 
+
+export const PanelContainer = styled.View`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+`;
 export const PanelWrapper = styled.View`
   width: 100%;
   background-color: #FFFFFF; 

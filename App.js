@@ -5,10 +5,15 @@ import CepFolder from './src/pages/CepFolder';
 import NavigationMap from './src/pages/NavigationMap';
 export default function App() {
   return (
-  //  < Home/>
-    // <CepFolder/>
-  <NavigationMap/>
-    
+    <View style={styles.container}>
+      <StatusBar hidden={true} />
+      <NavigationMap />
+    </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

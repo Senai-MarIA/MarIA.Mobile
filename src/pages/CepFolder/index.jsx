@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { Path } from 'react-native-svg';
-import * as NavigationBar from 'expo-navigation-bar'; // <-- Import da biblioteca adicionado
+import * as NavigationBar from 'expo-navigation-bar';
 
 import {
   Container,
@@ -42,7 +42,7 @@ export default function CepScreen() {
 
   return (
     <Container>
-      <KeyBoardBehavior behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <KeyBoardBehavior behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
 
         
         <WavesBackground>
