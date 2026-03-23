@@ -4,6 +4,59 @@ import { Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
+
+export const PanelWrapper = styled.View`
+  width: 100%;
+  background-color: #FFFFFF; 
+  border-top-left-radius: 20px; 
+  border-top-right-radius: 20px;
+`;
+
+export const MiddleContainer = styled.View`
+  background-color: #FFFFFF;
+  padding: 20px 30px;
+  width: 100%;
+  z-index: 1;
+`;
+
+
+export const TagsRow = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+export const TagCataBagulho = styled.TouchableOpacity`
+  background-color: #FFF2E0; 
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-right: 12px;
+`;
+
+export const TagCataBagulhoText = styled.Text`
+  color: #F2994A;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 4px; 
+`;
+
+export const TagLixoEletronico = styled.TouchableOpacity`
+  background-color: #E0F7F4; 
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+`;
+
+export const TagLixoEletronicoText = styled.Text`
+  color: #35A17C; 
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 4px;
+`;
+
 export const GreenFooterContainer = styled.View`
   width: 100%;
   height: 168px; 
@@ -36,6 +89,7 @@ export const LightWaveBottomWrapper = styled.View`
   left: 0;
   right: 0;
   z-index: 1;
+
 `;
 
 export const LightGreenBottomSvg = styled(Svg).attrs({
