@@ -14,7 +14,7 @@ export const ContentScroll = styled.ScrollView.attrs({
 export const Header = styled.View`
   background-color: #359D73;
   padding-top: 60px;
-  padding-horizontal: 25px; // o que seria isso?
+  /* padding-horizontal: 25px; // o que seria isso? */
   padding-bottom: 70px; 
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
@@ -73,7 +73,7 @@ export const AddressSubtitle = styled.Text`
 `;
 
 export const CardsContainer = styled.View`
-  padding-horizontal: 20px; // aqui tbm, qual a função disso?
+  /* padding-horizontal: 20px; // aqui tbm, qual a função disso? */
   margin-top: -40px; 
 `;
 
@@ -82,7 +82,7 @@ export const Card = styled.View`
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 20px;
-  elevation: 4; 
+  /* elevation: 4;  */
   /* shadow-color: #000;
   shadow-offset: 0px 4px;
   shadow-opacity: 0.05;

@@ -9,7 +9,7 @@ export default function App() {
       <StatusBar hidden={true} />
       {/* <Home /> */}
       {/* <CepFolder /> */}
-      {/* <NavigationMap /> */}
+      { <NavigationMap />}
     </View>
   );
 }
