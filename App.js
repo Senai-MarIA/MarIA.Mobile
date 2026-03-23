@@ -3,14 +3,15 @@ import { StyleSheet, View } from 'react-native';
 import Home from './src/pages/Home';
 import CepFolder from './src/pages/CepFolder';
 import NavigationMap from './src/pages/NavigationMap';
+import Reminders from './src/pages/Reminders';
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-       { <CepFolder /> }
+       {/* { <CepFolder /> } */}
       {/* { <Home /> } */}
       {/* { <NavigationMap />} */}
-      {/* { <Reminders /> } */}
+      {  <Reminders /> }
     </View>
   );
 }
