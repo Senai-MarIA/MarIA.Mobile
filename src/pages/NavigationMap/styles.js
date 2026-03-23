@@ -83,8 +83,8 @@ export const AddressTextWrapper = styled.View`
 `;
 
 export const CurrentAddressLabel = styled.Text`
-  color: #828282; 
-  font-size: 14px;
+  color: #2C6C56; 
+  font-size: 16px;
 `;
 
 export const CurrentAddressValue = styled.Text`
@@ -147,10 +147,10 @@ export const LightGreenBottomSvg = styled(Svg).attrs({
 
 export const FooterContent = styled.View`
   position: absolute;
-  bottom: 0;
+  bottom: 60px;
+  margin-left: 10px;
   left: 0;
-  right: 0;
-  height: 120px; 
+  right: 0; 
   z-index: 2;
   padding: 0 30px;
   justify-content: center;
@@ -178,6 +178,7 @@ export const RegionText = styled.Text`
 export const UserInfoRow = styled.View`
   flex-direction: row;
   align-items: center;
+  margin-right: 15px;
 `;
 
 export const UserName = styled.Text`

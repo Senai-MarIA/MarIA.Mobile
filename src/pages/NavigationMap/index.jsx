@@ -5,9 +5,6 @@ import { Path } from 'react-native-svg';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
-
-
-
 import {
   ScreenContainer,
   PanelContainer,
@@ -52,9 +49,6 @@ export default function MapScreen() {
   return (
 
     <ScreenContainer behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
-
-
-
       <WebView
         source={{
           html: `
@@ -96,7 +90,7 @@ export default function MapScreen() {
 
             <CurrentAddressContainer>
               <AddressTextWrapper>
-                <CurrentAddressLabel>Endereço atual</CurrentAddressLabel>
+                <CurrentAddressLabel>Endereço</CurrentAddressLabel>
                 <CurrentAddressValue>Av. Giovanni Gronchi, 5910</CurrentAddressValue>
               </AddressTextWrapper>
 
