@@ -14,7 +14,7 @@ export const ContentScroll = styled.ScrollView.attrs({
 export const Header = styled.View`
   background-color: #359D73;
   padding-top: 60px;
-  padding-horizontal: 25px;
+  padding-horizontal: 25px; // o que seria isso?
   padding-bottom: 70px; 
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
@@ -73,7 +73,7 @@ export const AddressSubtitle = styled.Text`
 `;
 
 export const CardsContainer = styled.View`
-  padding-horizontal: 20px;
+  padding-horizontal: 20px; // aqui tbm, qual a função disso?
   margin-top: -40px; 
 `;
 
@@ -83,10 +83,11 @@ export const Card = styled.View`
   padding: 20px;
   margin-bottom: 20px;
   elevation: 4; 
-  shadow-color: #000;
+  /* shadow-color: #000;
   shadow-offset: 0px 4px;
   shadow-opacity: 0.05;
   shadow-radius: 10px;
+   qual a função disso?*/
 `;
 
 export const CardBorderLeft = styled(Card)`
@@ -161,16 +162,16 @@ export const SmallCard = styled.TouchableOpacity`
   background-color: #FFF;
   width: 47%;
   border-radius: 20px;
-  padding-vertical: 25px;
+  /* padding-vertical: 25px; */
   align-items: center;
   justify-content: center;
   border-bottom-width: 4px;
   border-bottom-color: #A3E4B7;
-  elevation: 4;
-  shadow-color: #000;
+  /* elevation: 4; */
+  /* shadow-color: #000;
   shadow-offset: 0px 4px;
   shadow-opacity: 0.05;
-  shadow-radius: 10px;
+  shadow-radius: 10px; aqui tbm */
 `;
 
 export const SmallCardText = styled.Text`
@@ -185,7 +186,7 @@ export const BottomNavContainer = styled.View`
   justify-content: space-around;
   align-items: center;
   background-color: #FFF;
-  padding-vertical: 10px;
+  /* padding-vertical: 10px; */
   padding-bottom: 20px; 
   border-top-width: 1px;
   border-top-color: #F0F0F0;

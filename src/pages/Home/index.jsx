@@ -1,7 +1,7 @@
 import React from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
-import { Image } from 'react-native';
+// import { Image } from 'react-native';
 import imgmaria from "../../assets/imgmaria.png"
 import TagButton from "../../components/TagButton";
 import { MarIAOwl } from './styles';
@@ -10,7 +10,7 @@ import {
   ProfileArea, ProfileName, ProfileAvatar, AddressTitle, AddressSubtitle,
   CardsContainer, Card, CardBorderLeft, CardHeader, DotGreen, CardSubtitle,
   IconBoxPurple, CardTitle, CardTime, TagsRow, TagCataBagulho, TagCataBagulhoText,
-  RowCards, SmallCard, SmallCardText, BottomNavContainer, NavItem, NavText, 
+  RowCards, SmallCard, SmallCardText, BottomNavContainer, NavItem, NavText,
 } from './styles';
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
             <TagSuaRegiao>
               <TagSuaRegiaoText>Sua região</TagSuaRegiaoText>
             </TagSuaRegiao>
-            
+
             <ProfileArea>
               <ProfileName>Maria</ProfileName>
               <ProfileAvatar>
@@ -39,7 +39,7 @@ export default function Home() {
         </Header>
 
         <CardsContainer>
-          
+
           <Card>
             <CardHeader>
               <DotGreen />
@@ -51,21 +51,21 @@ export default function Home() {
             </CardHeader>
             <CardTitle>Amanhã</CardTitle>
             <CardTime>07:00 - 10:00</CardTime>
-            
+
             <TagsRow>
-              <TagButton 
+              <TagButton
                 text="Lixo Comum"
                 bgColor="#EAEAEA"
                 textColor="#555"
                 icon={<MaterialCommunityIcons name="trash-can-outline" size={14} color="#555" />}
-                /* desenho de uma lixeira, é de uma biblioteca especifica que coloquei no projeto da expo, podemos testar o quão viavel ela é ou só simplesmente baixar os icones */
+              /* desenho de uma lixeira, é de uma biblioteca especifica que coloquei no projeto da expo, podemos testar o quão viavel ela é ou só simplesmente baixar os icones */
               />
-              <TagButton 
+              <TagButton
                 text="Reciclável"
                 bgColor="#D1F2EB"
                 textColor="#00A86B"
                 icon={<MaterialCommunityIcons name="recycle" size={14} color="#00A86B" />}
-                /* desenho de reciclagem, é de uma biblioteca especifica que coloquei no projeto da expo, podemos testar o quão viavel ela é ou só simplesmente baixar os icones */
+              /* desenho de reciclagem, é de uma biblioteca especifica que coloquei no projeto da expo, podemos testar o quão viavel ela é ou só simplesmente baixar os icones */
               />
             </TagsRow>
           </Card>
@@ -98,7 +98,7 @@ export default function Home() {
         </CardsContainer>
       </ContentScroll>
 
-    <MarIAOwl source={imgmaria} />
+      <MarIAOwl source={imgmaria} />
 
       <BottomNavContainer>
         <NavItem>
@@ -106,13 +106,13 @@ export default function Home() {
           /* desenho de uma seta para esquerda, é de uma biblioteca especifica que coloquei no projeto da expo, podemos testar o quão viavel ela é ou só simplesmente baixar os icones, voltada para icones mais minimalistas */
           <NavText>Voltar</NavText>
         </NavItem>
-        
+
         <NavItem>
           <Feather name="home" size={24} color="#555" />
           /* desenho de uma casa, é de uma biblioteca especifica que coloquei no projeto da expo, podemos testar o quão viavel ela é ou só simplesmente baixar os icones, voltada para icones mais minimalistas */
           <NavText>Home</NavText>
         </NavItem>
-        
+
         <NavItem>
           <View style={{ width: 30, height: 30, borderRadius: 15, backgroundColor: '#359D73', justifyContent: 'center', alignItems: 'center' }}>
             <Feather name="smile" size={16} color="#FFF" />
