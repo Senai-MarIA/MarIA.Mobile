@@ -47,3 +47,40 @@ export const RemindersTitle = styled.Text`
 
 `;
 
+export const ContainerCollect = styled.View`
+padding: 43px 31px;
+gap: 30px;
+`;
+
+export const ContainerTruck = styled.View`
+flex-direction: row;
+gap: 16px;
+align-items: center;
+`;
+
+export const CollectText = styled.Text`
+font-size: 16px;
+`;
+
+export const ContainerGameMaria = styled.View`
+flex-direction: row;
+gap: 16px;
+`;
+
+export const TextGameMaria = styled.Text`
+
+`;
+
+export const LinkGameMaria = styled.Text`
+font-size: 19px;
+color: #FF00C8;
+`;
+
+export const ContentLinkGameMaria = styled.View`
+flex-direction: row;
+align-self: flex-end;
+padding: 0px 43px;
+align-items: center;
+gap: 8px;
+`;
+
