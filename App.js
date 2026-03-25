@@ -9,9 +9,9 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar hidden={true} />
        {/* { <CepFolder /> } */}
-      {/* { <Home /> } */}
+      { <Home /> }
       {/* { <NavigationMap />} */}
-      {  <Reminders /> }
+      {/* {  <Reminders /> } */}
     </View>
   );
 }
