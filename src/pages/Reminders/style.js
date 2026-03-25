@@ -84,3 +84,29 @@ align-items: center;
 gap: 8px;
 `;
 
+export const WavesContainer = styled.View`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /* Largura do maior SVG para garantir que não corte */
+  width: 272px; 
+  height: 202px;
+`;
+
+export const SvgWrapper = styled.View`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`;
+
+export const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 45px;
+  left: 35px;
+  width: 52px;
+  height: 52px;
+  background-color: #3ba07b;
+  border-radius: 26px;
+  justify-content: center;
+  align-items: center;
+`;
