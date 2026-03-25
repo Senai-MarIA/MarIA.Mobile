@@ -9,6 +9,7 @@ export const ScreenContainer = styled.View`
   width: 100%;
   height: 100%;
   background-color: #F5F5F5;
+  position: relative;
 `;
 
 
@@ -198,3 +199,10 @@ export const AddressSubtitle = styled.Text`
   color: #E0F2E9; 
   font-size: 14px;
 `;
+
+export const Button = styled.TouchableOpacity`
+position: absolute;
+top: 45px;
+left: 20px;
+z-index: 1;
+`

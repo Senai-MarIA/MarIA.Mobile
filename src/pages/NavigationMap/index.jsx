@@ -5,6 +5,7 @@ import { Path } from 'react-native-svg';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {
   ScreenContainer,
   PanelContainer,
@@ -33,10 +34,12 @@ import {
   UserName,
   AddressTitle,
   AddressSubtitle,
+  Button
 } from './styles.js';
 
 export default function MapScreen() {
 
+  const Navigation = useNavigation();
   useEffect(() => {
     if (Platform.OS === 'android') {
 
@@ -49,6 +52,10 @@ export default function MapScreen() {
   return (
 
     <ScreenContainer behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
+      <Button onPress={() => Navigation.navigate('Home')}>
+        <Image  source={require("../../assets/arrow-left.png")}/>
+      </Button>
+
       <WebView
         source={{
           html: `
