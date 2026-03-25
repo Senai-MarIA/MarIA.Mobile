@@ -99,16 +99,17 @@ export const Content = styled.View`
 
 export const Title = styled.Text`
   font-size: 34px;
-  font-weight: bold;
   color: #FFFFFF;
   margin-bottom: 8px;
+  font-family: 'Poppins_500Medium';
+  
 `;
 
 export const Subtitle = styled.Text`
-  font-size: 16px;
+  font-size: 20px;
   color: #FFFFFF;
   margin-bottom: 30px;
-  font-weight: 500;
+  font-family: 'Poppins_300Light';
 `;
 
 export const Input = styled.TextInput.attrs({
@@ -125,7 +126,6 @@ export const Input = styled.TextInput.attrs({
   font-size: 16px;
   color: #333333;
   margin-bottom: 20px;
-  
 `;
 
 export const Button = styled.TouchableOpacity.attrs({
@@ -139,6 +139,7 @@ export const Button = styled.TouchableOpacity.attrs({
   align-self: center; 
   padding: 0 40px;
   top: 79px;
+
   
 `;
 
@@ -146,6 +147,8 @@ export const ButtonText = styled.Text`
   color: #2a2a2a;
   font-size: 14px;
   font-weight: bold;
+   font-family:  'Poppins-Medium';
+   font-weight: 500;
 `;
 
 
@@ -177,4 +180,5 @@ export const Image = styled.Image`
 export const FooterText = styled.Text`
   color: #666666;
   font-size: 12px;
+  font-family: 'Poppins_500Medium';
 `;

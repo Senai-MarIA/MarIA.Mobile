@@ -5,6 +5,7 @@ import { Svg, Path, } from 'react-native-svg';
 import imgmaria from "../../assets/imgmaria.png"
 import TagButton from "../../components/TagButton";
 import { Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container, ContentScroll, Header, HeaderTop, TagSuaRegiao, TagSuaRegiaoText,
@@ -14,6 +15,8 @@ import {
   RowCards, SmallCard, SmallCardText, BottomNavContainer, WaveContainer, HeaderContent,
   MarIAOwl
 } from './styles';
+
+// const Navigation = useNavigation();
 
 export default function Home() {
   return (

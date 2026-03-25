@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, } from 'react';
 import { Platform } from 'react-native';
 import { Path } from 'react-native-svg';
 import * as NavigationBar from 'expo-navigation-bar';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
@@ -29,6 +30,7 @@ import {
 
 export default function CepScreen() {
 
+  const Navigation = useNavigation();
   
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -95,8 +97,8 @@ export default function CepScreen() {
             maxLength={19}
           />
 
-          <Button>
-            <ButtonText>Pesquisar</ButtonText>
+          <Button onPress={() => Navigation.navigate('Home')}>
+            <ButtonText >Pesquisar</ButtonText>
           </Button>
         </Content>
 
