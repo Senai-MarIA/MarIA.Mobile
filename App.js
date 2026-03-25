@@ -36,6 +36,7 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="CepFolder" component={CepFolder} />
           <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
           <Stack.Screen options={{ headerShown: false }} name="NavigationMap" component={NavigationMap} />
+          <Stack.Screen options={{ headerShown: false }} name="Reminders" component={Reminders} />
         </Stack.Navigator>
       </NavigationContainer>
 

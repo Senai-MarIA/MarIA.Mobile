@@ -2,8 +2,11 @@ import './style.js';
 import { Container, ContainerInfo, ContentTitles, SectionUser, SubTitle, Title, UserName, Reminder, RemindersTitle, ContainerCollect, ContainerTruck, CollectText, ContainerGameMaria, TextGameMaria, LinkGameMaria, ContentLinkGameMaria, WavesContainer, SvgWrapper, BackButton } from './style.js';
 import { Image } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Reminders() {
+
+    const Navigation = useNavigation();
     return (
         <Container>
             <ContainerInfo>
@@ -57,7 +60,7 @@ export default function Reminders() {
                 </SvgWrapper>
             </WavesContainer>
 
-            <BackButton>
+            <BackButton onPress={() => Navigation.navigate('Home')}>
                 <Image source={require('../../assets/arrow-left.png')} style={{ width: 24, height: 24 }} />
             </BackButton>
 
