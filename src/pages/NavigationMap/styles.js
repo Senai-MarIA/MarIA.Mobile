@@ -51,8 +51,9 @@ export const TagCataBagulho = styled.TouchableOpacity`
 export const TagCataBagulhoText = styled.Text`
   color: #F2994A;
   font-size: 12px;
-  font-weight: bold;
-  margin-left: 4px; 
+  font-weight: 500;
+  margin-left: 4px;
+  font-family: 'Poppins_500Medium';
 `;
 
 export const TagLixoEletronico = styled.TouchableOpacity`
@@ -66,7 +67,8 @@ export const TagLixoEletronico = styled.TouchableOpacity`
 export const TagLixoEletronicoText = styled.Text`
   color: #35A17C; 
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 500;
+  font-family: 'Poppins_500Medium';
   margin-left: 4px;
 `;
 
@@ -86,13 +88,16 @@ export const AddressTextWrapper = styled.View`
 export const CurrentAddressLabel = styled.Text`
   color: #2C6C56; 
   font-size: 16px;
+  font-weight: 600;
+  font-family: 'Poppins_600SemiBold';
 `;
 
 export const CurrentAddressValue = styled.Text`
-  color: #333333; 
-  font-size: 18px;
-  font-weight: bold;
+  color: #000000; 
+  font-size: 16px;
+  font-weight: 500;
   margin-top: 4px;
+  font-family: 'Poppins_500Medium';
 `;
 
 export const RouteButton = styled.TouchableOpacity` 
@@ -148,13 +153,12 @@ export const LightGreenBottomSvg = styled(Svg).attrs({
 
 export const FooterContent = styled.View`
   position: absolute;
-  bottom: 60px;
+  bottom: 40px;
   margin-left: 10px;
   left: 0;
   right: 0; 
   z-index: 2;
   padding: 0 30px;
-  justify-content: center;
 `;
 
 export const TopRow = styled.View`
@@ -172,8 +176,9 @@ export const RegionTag = styled.View`
 
 export const RegionText = styled.Text`
   color: #FFFFFF;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: 'Poppins_300Light';
 `;
 
 export const UserInfoRow = styled.View`
@@ -186,18 +191,22 @@ export const UserName = styled.Text`
   color: #FFFFFF;
   font-size: 14px;
   margin-right: 8px;
+  font-family: 'Poppins_300Light';
 `;
 
 export const AddressTitle = styled.Text`
   color: #FFFFFF;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Poppins_600SemiBold';
   margin-bottom: 2px;
 `;
 
 export const AddressSubtitle = styled.Text`
   color: #E0F2E9; 
   font-size: 14px;
+  font-weight: 400;
+  font-family: 'Poppins_400Regular';
 `;
 
 export const Button = styled.TouchableOpacity`

@@ -28,7 +28,8 @@ export const WaveContainer = styled.View`
 export const HeaderContent = styled.View`
   position: relative;
   z-index: 10;
-  padding-top: 45px;
+  padding-top: 31px;
+  margin-left: 15px;
   padding-horizontal: 25px;
 `;
 
@@ -50,7 +51,7 @@ export const TagSuaRegiaoText = styled.Text`
   color: #FFF;
   font-size: 14px;
   font-weight: 300;
-  font-family: 'poppins300light';
+  font-family: 'Poppins_300Light';
 `;
 
 export const ProfileArea = styled.View`
@@ -63,7 +64,7 @@ export const ProfileName = styled.Text`
   margin-right: 10px;
   font-size: 14px;
   font-weight: 300;
-  font-family: 'poppins300light';
+  font-family: 'Poppins_300Light';
 `;
 
 export const ProfileAvatar = styled.View`
@@ -78,14 +79,14 @@ export const ProfileAvatar = styled.View`
 export const AddressTitle = styled.Text`
   color: #FFF;
   font-size: 22px;
-  font-family: 'poppins600semiBold';
+  font-family: 'Poppins_600SemiBold';
 `;
 
 export const AddressSubtitle = styled.Text`
   color: #E0F2E9;
   font-size: 14px;
   margin-top: 2px;
-  font-family: 'poppins400regular';
+  font-family: 'Poppins_400Regular';
 `;
 
 
@@ -128,7 +129,7 @@ export const DotGreen = styled.View`
 export const CardSubtitle = styled.Text`
   color: #888;
   font-size: 10px;
-  font-family: 'poppins500medium';
+  font-family: 'Poppins_500Medium';
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -143,7 +144,7 @@ export const IconBoxPurple = styled.View`
 
 export const CardTitle = styled.Text`
   font-size: 32px;
-  font-family: 'popppins500medium';
+  font-family: 'Poppins_500Medium';
   bottom: 14px;
   font-weight: bold;
   color: #111;
@@ -153,7 +154,7 @@ export const CardTime = styled.Text`
   font-size: 14px;
   color: #777;
   margin-bottom: 15px;
-  font-family: 'poppins500medium';
+  font-family: 'Poppins_500Medium';
 `;
 
 export const TagsRow = styled.View`
@@ -171,7 +172,7 @@ export const TagCataBagulho = styled.View`
 export const TagCataBagulhoText = styled.Text`
   color: #7B2CBF;
   font-size: 11px;
-  font-family: 'poppins500medium';
+  font-family: 'Poppins_500Medium';
   font-weight: 500;
 `;
 
