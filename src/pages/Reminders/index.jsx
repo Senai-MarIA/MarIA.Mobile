@@ -40,7 +40,7 @@ export default function Reminders() {
                 </ContainerGameMaria>
             </ContainerCollect>
             <ContentLinkGameMaria>
-                <LinkGameMaria>Jogue agora</LinkGameMaria>
+                <LinkGameMaria onPress={() => Navigation.navigate('Ad')}>Jogue agora</LinkGameMaria>
                 <Image source={require('../../assets/arrow.png')} />
             </ContentLinkGameMaria>
 

@@ -8,6 +8,7 @@ import Home from './src/pages/Home';
 import CepFolder from './src/pages/CepFolder';
 import NavigationMap from './src/pages/NavigationMap';
 import Reminders from './src/pages/Reminders';
+import Ad from './src/pages/Ad';
 
 const ContainerApp = styled.SafeAreaView`
   flex: 1;
@@ -38,6 +39,7 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
           <Stack.Screen options={{ headerShown: false }} name="NavigationMap" component={NavigationMap} />
           <Stack.Screen options={{ headerShown: false }} name="Reminders" component={Reminders} />
+          <Stack.Screen options={{ headerShown: false }} name="Ad" component={Ad} />
         </Stack.Navigator>
       </NavigationContainer>
 
