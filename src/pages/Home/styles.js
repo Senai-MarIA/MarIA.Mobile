@@ -48,8 +48,9 @@ export const TagSuaRegiao = styled.View`
 
 export const TagSuaRegiaoText = styled.Text`
   color: #FFF;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: 'poppins300light';
 `;
 
 export const ProfileArea = styled.View`
@@ -61,6 +62,8 @@ export const ProfileName = styled.Text`
   color: #FFF;
   margin-right: 10px;
   font-size: 14px;
+  font-weight: 300;
+  font-family: 'poppins300light';
 `;
 
 export const ProfileAvatar = styled.View`
@@ -75,13 +78,14 @@ export const ProfileAvatar = styled.View`
 export const AddressTitle = styled.Text`
   color: #FFF;
   font-size: 22px;
-  font-weight: bold;
+  font-family: 'poppins600semiBold';
 `;
 
 export const AddressSubtitle = styled.Text`
   color: #E0F2E9;
-  font-size: 13px;
+  font-size: 14px;
   margin-top: 2px;
+  font-family: 'poppins400regular';
 `;
 
 
@@ -124,7 +128,8 @@ export const DotGreen = styled.View`
 export const CardSubtitle = styled.Text`
   color: #888;
   font-size: 10px;
-  font-weight: 700;
+  font-family: 'poppins500medium';
+  font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   flex: 1;
@@ -137,7 +142,9 @@ export const IconBoxPurple = styled.View`
 `;
 
 export const CardTitle = styled.Text`
-  font-size: 26px;
+  font-size: 32px;
+  font-family: 'popppins500medium';
+  bottom: 14px;
   font-weight: bold;
   color: #111;
 `;
@@ -146,6 +153,7 @@ export const CardTime = styled.Text`
   font-size: 14px;
   color: #777;
   margin-bottom: 15px;
+  font-family: 'poppins500medium';
 `;
 
 export const TagsRow = styled.View`
@@ -163,17 +171,18 @@ export const TagCataBagulho = styled.View`
 export const TagCataBagulhoText = styled.Text`
   color: #7B2CBF;
   font-size: 11px;
-  font-weight: 600;
+  font-family: 'poppins500medium';
+  font-weight: 500;
 `;
 
 export const RowCards = styled.View`
   flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  margin-right: 20px;
 `;
 
 export const SmallCard = styled.TouchableOpacity`
   background-color: #FFF;
+  margin-right: 30px;
   width: 48%;
   border-radius: 20px;
   padding-vertical: 25px;
@@ -182,7 +191,6 @@ export const SmallCard = styled.TouchableOpacity`
   border-bottom-width: 4px;
   border-bottom-color: #A3E4B7;
   position: relative; 
-  
   elevation: 4;
   shadow-color: #000;
   shadow-offset: 0px 4px;

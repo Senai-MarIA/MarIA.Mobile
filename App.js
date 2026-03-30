@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import styled from 'styled-components';
 import { StyleSheet, View } from 'react-native';
-import { useFonts, Poppins_400Regular, Poppins_700Bold, Poppins_300Light, Poppins_500Medium } from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_400Regular, Poppins_700Bold, Poppins_300Light, Poppins_500Medium, Poppins_600SemiBold } from '@expo-google-fonts/poppins';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/pages/Home';
@@ -18,6 +18,7 @@ export default function App() {
     Poppins_300Light,
     Poppins_400Regular,
     Poppins_500Medium,
+    Poppins_600SemiBold,
 
   });
 
