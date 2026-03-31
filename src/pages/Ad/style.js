@@ -3,10 +3,10 @@ import styled from 'styled-components/native';
 
 
 export const ContainerMission = styled.View`
+flex: 1;
+background-color: #000000;
 justify-content: center;
 align-items: center;
-padding: 137px 0px;
-
 `
 
 export const TitleMission = styled.Text`
@@ -14,6 +14,7 @@ font-size: 32px;
 text-align: center;
 width: 275px;
 font-family: 'Poppins_400Regular';
+color: #FFFFFF;
 `;
 
 export const TextSub = styled.Text`
@@ -28,4 +29,5 @@ font-size: 20px;
 font-family: 'Poppins_400Regular';
 width: 393px;
 text-align: center;
+color: #FFFFFF;
 `
