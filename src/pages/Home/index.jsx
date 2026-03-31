@@ -116,7 +116,7 @@ export default function Home() {
 
       <BottomNavContainer>
         <MaterialCommunityIcons name="arrow-left" size={28} color="#81818E"
-          onPress={() => Navigation.goBack('CepFolder')} />
+          onPress={() => Navigation.navigate('CepFolder')} />
         <MaterialCommunityIcons name="home" size={28} color="#81818E" />
         <TouchableOpacity onPress={() => Navigation.navigate('Ad')}>
           <Image source={require('../../assets/anuncio.png')} style={{ width: 28, height: 28, resizeMode: 'contain', }} />

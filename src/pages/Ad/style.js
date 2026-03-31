@@ -9,6 +9,11 @@ justify-content: center;
 align-items: center;
 `
 
+export const BackPage = styled.TouchableOpacity`
+margin-right: 320px;
+bottom: 20px;
+`;
+
 export const TitleMission = styled.Text`
 font-size: 32px;
 text-align: center;
