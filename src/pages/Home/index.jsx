@@ -4,7 +4,7 @@ import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { Svg, Path, } from 'react-native-svg';
 import imgmaria from "../../assets/imgmaria.png"
 import TagButton from "../../components/TagButton";
-import { Image } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import {
@@ -115,7 +115,12 @@ export default function Home() {
       <MarIAOwl source={imgmaria} style={{ width: 80, height: 80, resizeMode: 'contain' }} />
 
       <BottomNavContainer>
-
+        <MaterialCommunityIcons name="arrow-left" size={28} color="#81818E"
+          onPress={() => Navigation.goBack('CepFolder')} />
+        <MaterialCommunityIcons name="home" size={28} color="#81818E" />
+        <TouchableOpacity onPress={() => Navigation.navigate('Ad')}>
+          <Image source={require('../../assets/anuncio.png')} style={{ width: 28, height: 28, resizeMode: 'contain', }} />
+        </TouchableOpacity>
       </BottomNavContainer>
     </Container>
   );

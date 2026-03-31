@@ -239,3 +239,4 @@ export const MarIAOwl = styled.Image`
   right: 15px;
   z-index: 20;
 `;
+
