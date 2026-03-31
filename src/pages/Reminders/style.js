@@ -85,6 +85,7 @@ export const LinkGameMaria = styled.Text`
 font-size: 19px;
 color: #FF00C8;
 font-family: 'Poppins_500Medium';
+text-decoration: underline;
 `;
 
 export const ContentLinkGameMaria = styled.View`
