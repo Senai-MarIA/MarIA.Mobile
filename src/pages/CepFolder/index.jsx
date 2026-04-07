@@ -94,7 +94,7 @@ export default function CepScreen() {
           <Input
             placeholder="CEP"
             keyboardType="numeric"
-            maxLength={19}
+            maxLength={9}
           />
 
           <Button onPress={() => Navigation.navigate('Home')}>
