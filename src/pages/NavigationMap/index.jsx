@@ -5,7 +5,7 @@ import { Path } from 'react-native-svg';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   ScreenContainer,
   PanelContainer,
@@ -40,6 +40,13 @@ import {
 export default function MapScreen() {
 
   const Navigation = useNavigation();
+  const route = useRoute();
+  const cepData = route.params?.cepData;
+
+  const currentAddress = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Av. Giovanni Gronchi, 5910';
+  const addressTitle = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
+  const addressSubtitle = cepData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+
   useEffect(() => {
     if (Platform.OS === 'android') {
 
@@ -52,7 +59,7 @@ export default function MapScreen() {
   return (
 
     <ScreenContainer behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
-      <Button onPress={() => Navigation.navigate('Home')}>
+      <Button onPress={() => Navigation.navigate('Home', { cepData })}>
         <Image  source={require("../../assets/arrow-left.png")}/>
       </Button>
 
@@ -98,7 +105,7 @@ export default function MapScreen() {
             <CurrentAddressContainer>
               <AddressTextWrapper>
                 <CurrentAddressLabel>Endereço</CurrentAddressLabel>
-                <CurrentAddressValue>Av. Giovanni Gronchi, 5910</CurrentAddressValue>
+                <CurrentAddressValue>{currentAddress}</CurrentAddressValue>
               </AddressTextWrapper>
 
               <RouteButton activeOpacity={0.8}>
@@ -132,8 +139,8 @@ export default function MapScreen() {
                 </UserInfoRow>
               </TopRow>
 
-              <AddressTitle>Rua Santa Archelia, 185</AddressTitle>
-              <AddressSubtitle>Jardim Casa Blanca</AddressSubtitle>
+              <AddressTitle>{addressTitle}</AddressTitle>
+              <AddressSubtitle>{addressSubtitle}</AddressSubtitle>
             </FooterContent>
           </GreenFooterContainer>
 

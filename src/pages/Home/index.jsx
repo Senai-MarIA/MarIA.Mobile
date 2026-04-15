@@ -5,7 +5,7 @@ import { Svg, Path, } from 'react-native-svg';
 import imgmaria from "../../assets/imgmaria.png"
 import TagButton from "../../components/TagButton";
 import { Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import {
   Container, ContentScroll, Header, HeaderTop, TagSuaRegiao, TagSuaRegiaoText,
@@ -21,6 +21,16 @@ import {
 export default function Home() {
 
   const Navigation = useNavigation();
+  const route = useRoute();
+  const cepData = route.params?.cepData;
+
+  console.log('Home - cepData recebido:', cepData);
+
+  const addressTitle = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
+  const addressSubtitle = cepData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+
+  console.log('Home - addressTitle:', addressTitle);
+  console.log('Home - addressSubtitle:', addressSubtitle);
   return (
     <Container>
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
@@ -54,8 +64,8 @@ export default function Home() {
                 <Image source={require('../../assets/MarIa.png')} style={{ width: 24, height: 24, borderRadius: 12, }} />
               </ProfileArea>
             </HeaderTop>
-            <AddressTitle>Rua Santa Archelia, 185</AddressTitle>
-            <AddressSubtitle>Jardim Casa Blanca</AddressSubtitle>
+            <AddressTitle>{addressTitle}</AddressTitle>
+            <AddressSubtitle>{addressSubtitle}</AddressSubtitle>
           </HeaderContent>
         </Header>
 
@@ -92,7 +102,7 @@ export default function Home() {
           </CardBorderLeft>
 
           <RowCards style={{ paddingHorizontal: 20 }}>
-            <SmallCard onPress={() => Navigation.navigate('Reminders')}>
+            <SmallCard onPress={() => Navigation.navigate('Reminders', { cepData })}>
               <View style={{ position: 'absolute', right: -5, top: -5, zIndex: -1 }}>
                 <Svg width="26" height="27" viewBox="0 0 26 27" fill="none">
                   <Path d="M10.5152 15.8357C8.44313 18.7941 4.7738 19.7469 2.31958 17.9638C-0.710252 15.7625 0.0720633 16.3861 2.14418 13.4277C4.21629 10.4693 9.9055 10.984 12.3597 12.7671C14.7046 14.6386 12.5874 12.8773 10.5152 15.8357Z" fill="#B6A3EF" />
@@ -103,7 +113,7 @@ export default function Home() {
             </SmallCard>
 
 
-            <SmallCard onPress={() => Navigation.navigate('NavigationMap')}>
+            <SmallCard onPress={() => Navigation.navigate('NavigationMap', { cepData })}>
               <Feather name="map" size={26} color="#000" />
               <SmallCardText>Mapa</SmallCardText>
             </SmallCard>
@@ -116,7 +126,10 @@ export default function Home() {
 
       <BottomNavContainer>
         <MaterialCommunityIcons name="arrow-left" size={28} color="#81818E"
-          onPress={() => Navigation.navigate('CepFolder')} />
+          onPress={() => {
+            console.log('Voltando para CepFolder');
+            Navigation.navigate('CepFolder');
+          }} />
         <MaterialCommunityIcons name="home" size={28} color="#81818E" />
         <TouchableOpacity onPress={() => Navigation.navigate('Ad')}>
           <Image source={require('../../assets/anuncio.png')} style={{ width: 28, height: 28, resizeMode: 'contain', }} />

@@ -1,5 +1,5 @@
-import React, { useEffect, } from 'react';
-import { Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Platform, Alert } from 'react-native';
 import { Path } from 'react-native-svg';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useNavigation } from '@react-navigation/native';
@@ -31,22 +31,83 @@ import {
 export default function CepScreen() {
 
   const Navigation = useNavigation();
-  
+  const [cep, setCep] = useState('');
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (Platform.OS === 'android') {
-    
+
       NavigationBar.setVisibilityAsync("hidden");
-     
+
       NavigationBar.setBehaviorAsync("overlay-swipe");
     }
   }, []);
 
+  const formatCep = (value) => {
+    // Remove non-digits
+    const cleaned = value.replace(/\D/g, '');
+    // Format as XXXXX-XXX
+    if (cleaned.length <= 5) {
+      return cleaned;
+    } else {
+      return `${cleaned.slice(0, 5)}-${cleaned.slice(5, 8)}`;
+    }
+  };
+
+  const validateCep = (cep) => {
+    const cleaned = cep.replace(/\D/g, '');
+    return cleaned.length === 8;
+  };
+
+  const handleSearch = async () => {
+    console.log('Botão pressionado - CEP digitado:', cep);
+
+    // Validar se o campo está vazio
+    if (!cep || cep.trim() === '') {
+      Alert.alert('Campo vazio', 'Por favor, digite um CEP antes de pesquisar.');
+      console.log('CEP vazio, validação falhou');
+      return;
+    }
+
+    // Validar se tem 8 dígitos
+    if (!validateCep(cep)) {
+      Alert.alert('CEP Inválido', 'Por favor, insira um CEP válido com 8 dígitos.');
+      console.log('CEP inválido:', cep);
+      return;
+    }
+
+    const cleanedCep = cep.replace(/\D/g, '');
+    console.log('CEP validado:', cleanedCep);
+
+    setLoading(true);
+    try {
+      const url = `https://viacep.com.br/ws/${cleanedCep}/json/`;
+      console.log('Fazendo requisição para:', url);
+      
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log('Resposta da API:', data);
+
+      if (data.erro) {
+        Alert.alert('CEP não encontrado', 'Verifique o CEP e tente novamente.');
+        setLoading(false);
+        return;
+      }
+
+      console.log('CEP encontrado, navegando para Home com dados:', data);
+      Navigation.navigate('Home', { cepData: data });
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+      Alert.alert('Erro', 'Não foi possível consultar o CEP. Verifique sua conexão com a internet.');
+      setLoading(false);
+    }
+  };
 
   return (
     <Container>
       <KeyBoardBehavior behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
 
-        
+
         <WavesBackground>
           <DarkWaveWrapper>
             <DarkGreenSvg>
@@ -67,7 +128,7 @@ export default function CepScreen() {
           </LightWaveWrapper>
         </WavesBackground>
 
-       
+
         <TopLeafWrapper>
           <TopLeafSvg>
             <Path
@@ -86,7 +147,7 @@ export default function CepScreen() {
           </BottomLeafSvg>
         </BottomLeafWrapper>
 
-        
+
         <Content>
           <Title>Onde você mora?</Title>
           <Subtitle>Qual seu CEP?</Subtitle>
@@ -95,10 +156,15 @@ export default function CepScreen() {
             placeholder="CEP"
             keyboardType="numeric"
             maxLength={9}
+            value={cep}
+            onChangeText={(text) => setCep(formatCep(text))}
           />
 
-          <Button onPress={() => Navigation.navigate('Home')}>
-            <ButtonText >Pesquisar</ButtonText>
+          <Button onPress={() => {
+            console.log('Botão pressionado');
+            handleSearch();
+          }} disabled={loading}>
+            <ButtonText>{loading ? 'Pesquisando...' : 'Pesquisar'}</ButtonText>
           </Button>
         </Content>
 

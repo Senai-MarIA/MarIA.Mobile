@@ -10,7 +10,10 @@ export default function Ad() {
     const Navigation = useNavigation();
     return (
         <ContainerMission>
-            <BackPage onPress={() => Navigation.navigate('Home')}>
+            <BackPage onPress={() => {
+                console.log('Voltando para Home de Ad');
+                Navigation.navigate('Home');
+            }}>
                 <Image source={require('../../assets/backPage.png')} />
             </BackPage>
             <TitleMission>

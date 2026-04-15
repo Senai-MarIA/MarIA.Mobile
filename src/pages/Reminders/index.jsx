@@ -2,17 +2,22 @@ import './style.js';
 import { Container, ContainerInfo, ContentTitles, SectionUser, SubTitle, Title, UserName, Reminder, RemindersTitle, ContainerCollect, ContainerTruck, CollectText, ContainerGameMaria, TextGameMaria, LinkGameMaria, ContentLinkGameMaria, WavesContainer, SvgWrapper, BackButton } from './style.js';
 import { Image } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function Reminders() {
 
     const Navigation = useNavigation();
+    const route = useRoute();
+    const cepData = route.params?.cepData;
+
+    const addressTitle = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
+    const addressSubtitle = cepData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
     return (
         <Container>
             <ContainerInfo>
                 <ContentTitles>
-                    <Title>Rua Santa Archelia, 185 </Title>
-                    <SubTitle>Jardim Casa Blanca</SubTitle>
+                    <Title>{addressTitle}</Title>
+                    <SubTitle>{addressSubtitle}</SubTitle>
                 </ContentTitles>
 
                 <SectionUser>
@@ -60,7 +65,10 @@ export default function Reminders() {
                 </SvgWrapper>
             </WavesContainer>
 
-            <BackButton onPress={() => Navigation.navigate('Home')}>
+            <BackButton onPress={() => {
+                console.log('Voltando para Home com cepData:', cepData);
+                Navigation.navigate('Home', { cepData });
+            }}>
                 <Image source={require('../../assets/arrow-left.png')} style={{ width: 24, height: 24 }} />
             </BackButton>
 
