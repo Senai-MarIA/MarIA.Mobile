@@ -98,7 +98,7 @@ export const CardsContainer = styled.View`
 export const Card = styled.View`
   background-color: #FFF;
   border-radius: 20px;
-  padding: 20px;
+  padding: 29px;
   margin-bottom: 20px;
   elevation: 5;
   shadow-color: #000;
@@ -153,7 +153,6 @@ export const CardTitle = styled.Text`
 export const CardTime = styled.Text`
   font-size: 14px;
   color: #777;
-  margin-bottom: 15px;
   font-family: 'Poppins_500Medium';
 `;
 
@@ -165,13 +164,13 @@ export const TagsRow = styled.View`
 
 export const TagCataBagulho = styled.View`
   background-color: #F3E8FF;
-  padding: 6px 12px;
+  padding: 8px 1px;
   border-radius: 12px;
 `;
 
 export const TagCataBagulhoText = styled.Text`
   color: #7B2CBF;
-  font-size: 11px;
+  font-size: 10px;
   font-family: 'Poppins_500Medium';
   font-weight: 500;
 `;
@@ -184,7 +183,7 @@ export const RowCards = styled.View`
 export const SmallCard = styled.TouchableOpacity`
   background-color: #FFF;
   margin-right: 30px;
-  width: 48%;
+  width: 47%;
   border-radius: 20px;
   padding-vertical: 25px;
   align-items: center;
