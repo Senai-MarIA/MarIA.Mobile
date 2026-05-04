@@ -10,8 +10,31 @@ export default function Reminders() {
     const route = useRoute();
     const cepData = route.params?.cepData;
 
-    const addressTitle = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
-    const addressSubtitle = cepData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+    // Validação de dados do CEP
+    const validateCepData = (data) => {
+        if (!data) {
+            console.warn('Reminders - Nenhum CEP fornecido, usando dados padrão');
+            return false;
+        }
+
+        const requiredFields = ['logradouro', 'bairro', 'localidade', 'uf'];
+        const hasAllFields = requiredFields.every(field => data[field]);
+
+        if (!hasAllFields) {
+            console.warn('Reminders - CEP incompleto, campos faltando:', requiredFields.filter(f => !data[f]));
+            return false;
+        }
+
+        return true;
+    };
+
+    const isValidData = validateCepData(cepData);
+
+    console.log('Reminders - cepData recebido:', cepData);
+    console.log('Reminders - Validação de CEP:', isValidData);
+
+    const addressTitle = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
+    const addressSubtitle = isValidData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
     return (
         <Container>
             <ContainerInfo>
@@ -45,7 +68,10 @@ export default function Reminders() {
                 </ContainerGameMaria>
             </ContainerCollect>
             <ContentLinkGameMaria>
-                <LinkGameMaria onPress={() => Navigation.navigate('Ad')}>Jogue agora</LinkGameMaria>
+                <LinkGameMaria onPress={() => {
+                    console.log('Navegando para Ad com cepData:', cepData);
+                    Navigation.navigate('Ad', { cepData });
+                }}>Jogue agora</LinkGameMaria>
                 <Image source={require('../../assets/arrow.png')} />
             </ContentLinkGameMaria>
 

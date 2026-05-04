@@ -43,9 +43,45 @@ export default function MapScreen() {
   const route = useRoute();
   const cepData = route.params?.cepData;
 
-  const currentAddress = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Av. Giovanni Gronchi, 5910';
-  const addressTitle = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
-  const addressSubtitle = cepData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+  // Validação de dados do CEP
+  const validateCepData = (data) => {
+    if (!data) {
+      console.warn('NavigationMap - Nenhum CEP fornecido, usando dados padrão');
+      return false;
+    }
+
+    const requiredFields = ['logradouro', 'bairro', 'localidade', 'uf'];
+    const hasAllFields = requiredFields.every(field => data[field]);
+
+    if (!hasAllFields) {
+      console.warn('NavigationMap - CEP incompleto, campos faltando:', requiredFields.filter(f => !data[f]));
+      return false;
+    }
+
+    return true;
+  };
+
+  const isValidData = validateCepData(cepData);
+
+  console.log('NavigationMap - cepData recebido:', cepData);
+  console.log('NavigationMap - Validação de CEP:', isValidData);
+
+  const currentAddress = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Av. Giovanni Gronchi, 5910';
+  const addressTitle = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
+  const addressSubtitle = isValidData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+
+  // Formata endereço completo para busca no mapa
+  const getMapAddress = () => {
+    if (isValidData) {
+      const fullAddress = `${cepData.logradouro}, ${cepData.numero || ''}, ${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}`;
+      return encodeURIComponent(fullAddress.trim());
+    }
+    return encodeURIComponent('Rua Santa Archelia, 185, Jardim Casa Blanca');
+  };
+
+  const mapUrl = `https://maps.google.com/maps?q=${getMapAddress()}&hl=pt-BR&z=15&output=embed`;
+
+  console.log('NavigationMap - URL do mapa:', mapUrl);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -77,7 +113,7 @@ export default function MapScreen() {
             </head>
             <body>
               <iframe 
-                src="https://maps.google.com/maps?q=-23.6288,-46.7369&hl=pt-BR&z=15&output=embed" 
+                src="${mapUrl}" 
                 allowfullscreen>
               </iframe>
             </body>

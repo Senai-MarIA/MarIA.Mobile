@@ -24,10 +24,31 @@ export default function Home() {
   const route = useRoute();
   const cepData = route.params?.cepData;
 
-  console.log('Home - cepData recebido:', cepData);
+  // Validação de dados do CEP
+  const validateCepData = (data) => {
+    if (!data) {
+      console.warn('Home - Nenhum CEP fornecido, usando dados padrão');
+      return false;
+    }
 
-  const addressTitle = cepData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
-  const addressSubtitle = cepData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+    const requiredFields = ['logradouro', 'bairro', 'localidade', 'uf'];
+    const hasAllFields = requiredFields.every(field => data[field]);
+
+    if (!hasAllFields) {
+      console.warn('Home - CEP incompleto, campos faltando:', requiredFields.filter(f => !data[f]));
+      return false;
+    }
+
+    return true;
+  };
+
+  const isValidData = validateCepData(cepData);
+
+  console.log('Home - cepData recebido:', cepData);
+  console.log('Home - Validação de CEP:', isValidData);
+
+  const addressTitle = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
+  const addressSubtitle = isValidData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
 
   console.log('Home - addressTitle:', addressTitle);
   console.log('Home - addressSubtitle:', addressSubtitle);
@@ -131,7 +152,10 @@ export default function Home() {
             Navigation.navigate('CepFolder');
           }} />
         <MaterialCommunityIcons name="home" size={28} color="#81818E" />
-        <TouchableOpacity onPress={() => Navigation.navigate('Ad')}>
+        <TouchableOpacity onPress={() => {
+          console.log('Navegando para Ad com cepData:', cepData);
+          Navigation.navigate('Ad', { cepData });
+        }}>
           <Image source={require('../../assets/anuncio.png')} style={{ width: 28, height: 28, resizeMode: 'contain', }} />
         </TouchableOpacity>
       </BottomNavContainer>
