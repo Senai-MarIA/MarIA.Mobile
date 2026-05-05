@@ -36,4 +36,6 @@ width: 393px;
 text-align: center;
 color: #FFFFFF;
 `
+export const OpenGame = styled.TouchableOpacity`
 
+`

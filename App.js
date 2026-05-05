@@ -9,6 +9,7 @@ import CepFolder from './src/pages/CepFolder';
 import NavigationMap from './src/pages/NavigationMap';
 import Reminders from './src/pages/Reminders';
 import Ad from './src/pages/Ad';
+import GameMaria from './src/pages/GameMaria/GameMaria';
 
 const ContainerApp = styled.SafeAreaView`
   flex: 1;
@@ -34,12 +35,12 @@ export default function App() {
       <StatusBar hidden={true} />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="CepFolder" screenOptions={{ HeaderShow: false }}>
-
           <Stack.Screen options={{ headerShown: false }} name="CepFolder" component={CepFolder} />
           <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
           <Stack.Screen options={{ headerShown: false }} name="NavigationMap" component={NavigationMap} />
           <Stack.Screen options={{ headerShown: false }} name="Reminders" component={Reminders} />
           <Stack.Screen options={{ headerShown: false }} name="Ad" component={Ad} />
+          <Stack.Screen options={{ headerShown: false }} name="GameMaria" component={GameMaria} />
         </Stack.Navigator>
       </NavigationContainer>
 
