@@ -43,7 +43,6 @@ export default function MapScreen() {
   const route = useRoute();
   const cepData = route.params?.cepData;
 
-  // Validação de dados do CEP
   const validateCepData = (data) => {
     if (!data) {
       console.warn('NavigationMap - Nenhum CEP fornecido, usando dados padrão');
@@ -70,7 +69,6 @@ export default function MapScreen() {
   const addressTitle = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
   const addressSubtitle = isValidData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
 
-  // Formata endereço completo para busca no mapa
   const getMapAddress = () => {
     if (isValidData) {
       const fullAddress = `${cepData.logradouro}, ${cepData.numero || ''}, ${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}`;
@@ -85,18 +83,15 @@ export default function MapScreen() {
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-
-      NavigationBar.setVisibilityAsync("hidden");
-
-      NavigationBar.setBehaviorAsync("overlay-swipe");
+      NavigationBar.setVisibilityAsync('hidden');
+      NavigationBar.setBehaviorAsync('overlay-swipe');
     }
   }, []);
 
   return (
-
     <ScreenContainer behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
       <Button onPress={() => Navigation.navigate('Home', { cepData })}>
-        <Image  source={require("../../assets/arrow-left.png")}/>
+        <Image source={require('../../assets/arrow-left.png')} />
       </Button>
 
       <WebView
