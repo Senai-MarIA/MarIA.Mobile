@@ -44,7 +44,6 @@ export default function GameMaria() {
             canvas.style.top = offsetY + 'px';
             canvas.style.background = '#000';
             canvas.style.imageRendering = 'pixelated';
-            canvas.style.touchAction = 'none';
             
             document.body.style.margin = '0';
             document.body.style.padding = '0';
@@ -52,7 +51,6 @@ export default function GameMaria() {
             document.body.style.background = '#000';
             document.body.style.width = '100vw';
             document.body.style.height = '100vh';
-            document.body.style.touchAction = 'none';
             
             document.documentElement.style.margin = '0';
             document.documentElement.style.padding = '0';
@@ -79,26 +77,20 @@ export default function GameMaria() {
             
             document.addEventListener('touchstart', (e) => {
               if (!e.target.closest('canvas')) return;
-              e.preventDefault();
-              e.stopPropagation();
               const touch = e.touches[0];
               canvas.dispatchEvent(createMouseEvent('mousedown', touch.clientX, touch.clientY));
-            }, {passive: false, capture: true});
+            }, {capture: true});
             
             document.addEventListener('touchmove', (e) => {
               if (!e.target.closest('canvas')) return;
-              e.preventDefault();
-              e.stopPropagation();
               const touch = e.touches[0];
               canvas.dispatchEvent(createMouseEvent('mousemove', touch.clientX, touch.clientY));
-            }, {passive: false, capture: true});
+            }, {capture: true});
             
             document.addEventListener('touchend', (e) => {
               if (!e.target.closest('canvas')) return;
-              e.preventDefault();
-              e.stopPropagation();
               canvas.dispatchEvent(createMouseEvent('mouseup', 0, 0));
-            }, {passive: false, capture: true});
+            }, {capture: true});
             
             window.addEventListener('resize', setupTouchMapping);
           })();
