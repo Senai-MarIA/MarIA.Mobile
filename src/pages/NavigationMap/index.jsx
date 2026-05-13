@@ -1,11 +1,10 @@
-import React from 'react';
-import { Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Path } from 'react-native-svg';
 import * as NavigationBar from 'expo-navigation-bar';
-import { useEffect } from 'react';
-import { Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+
 import {
   ScreenContainer,
   PanelContainer,
@@ -38,48 +37,38 @@ import {
 } from './styles.js';
 
 export default function MapScreen() {
-
-  const Navigation = useNavigation();
+  const navigation = useNavigation();
   const route = useRoute();
-  const cepData = route.params?.cepData;
 
-  const validateCepData = (data) => {
-    if (!data) {
-      console.warn('NavigationMap - Nenhum CEP fornecido, usando dados padrão');
-      return false;
-    }
+  
+  const info = route.params?.info || {};
 
-    const requiredFields = ['logradouro', 'bairro', 'localidade', 'uf'];
-    const hasAllFields = requiredFields.every(field => data[field]);
+  const logradouro = info.logradouro || '';
+  const bairro     = info.bairro     || '';
+  const cidade     = info.cidade     || 'São Paulo';
+  const uf         = info.uf         || 'SP';
+  const cep        = info.cep        || '';
+  const numero     = info.numero     || '';
 
-    if (!hasAllFields) {
-      console.warn('NavigationMap - CEP incompleto, campos faltando:', requiredFields.filter(f => !data[f]));
-      return false;
-    }
+  const temDados = !!(logradouro && bairro);
 
-    return true;
-  };
+ 
+  const currentAddress = temDados
+    ? `${logradouro}${numero ? `, ${numero}` : ''}`.trim()
+    : 'Endereço não carregado';
 
-  const isValidData = validateCepData(cepData);
+  const addressTitle    = currentAddress;
+  const addressSubtitle = temDados
+    ? `${bairro}, ${cidade} - ${uf}`
+    : 'Digite seu CEP na tela inicial';
 
-  console.log('NavigationMap - cepData recebido:', cepData);
-  console.log('NavigationMap - Validação de CEP:', isValidData);
 
-  const currentAddress = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Av. Giovanni Gronchi, 5910';
-  const addressTitle = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
-  const addressSubtitle = isValidData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+  const queryParts = [logradouro, numero, bairro, cidade, uf, cep]
+    .filter(Boolean)
+    .join(', ');
 
-  const getMapAddress = () => {
-    if (isValidData) {
-      const fullAddress = `${cepData.logradouro}, ${cepData.numero || ''}, ${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}`;
-      return encodeURIComponent(fullAddress.trim());
-    }
-    return encodeURIComponent('Rua Santa Archelia, 185, Jardim Casa Blanca');
-  };
-
-  const mapUrl = `https://maps.google.com/maps?q=${getMapAddress()}&hl=pt-BR&z=15&output=embed`;
-
-  console.log('NavigationMap - URL do mapa:', mapUrl);
+  const mapQuery = encodeURIComponent(queryParts || 'São Paulo, SP');
+  const mapUrl   = `https://maps.google.com/maps?q=${mapQuery}&hl=pt-BR&z=15&output=embed`;
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -88,34 +77,49 @@ export default function MapScreen() {
     }
   }, []);
 
+
+  const mapHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body { overflow: hidden; background: #e5e7eb; }
+          iframe { width: 100vw; height: 100vh; border: none; display: block; }
+        </style>
+      </head>
+      <body>
+        <iframe
+          src="${mapUrl}"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </body>
+    </html>
+  `;
+
   return (
-    <ScreenContainer behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
-      <Button onPress={() => Navigation.navigate('Home', { cepData })}>
+    <ScreenContainer>
+
+      
+      <Button
+        onPress={() => navigation.goBack()}
+        style={{ position: 'absolute', top: 40, left: 20, zIndex: 10 }}
+      >
         <Image source={require('../../assets/arrow-left.png')} />
       </Button>
 
       <WebView
-        source={{
-          html: `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <style>
-                body { margin: 0; padding: 0; overflow: hidden; }
-                iframe { width: 100vw; height: 100vh; border: none; }
-              </style>
-            </head>
-            <body>
-              <iframe 
-                src="${mapUrl}" 
-                allowfullscreen>
-              </iframe>
-            </body>
-          </html>
-        `}}
+        source={{ html: mapHtml }}
         style={{ flex: 1 }}
         scrollEnabled={false}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        originWhitelist={['*']}
+        startInLoadingState={true}
+        mixedContentMode="always"
       />
 
       <PanelContainer>
@@ -123,12 +127,18 @@ export default function MapScreen() {
           <MiddleContainer>
             <TagsRow>
               <TagCataBagulho activeOpacity={0.7}>
-                <Image source={require('../../assets/CataBagulho.png')} style={{ width: 16, height: 16, resizeMode: 'contain' }} />
+                <Image
+                  source={require('../../assets/CataBagulho.png')}
+                  style={{ width: 16, height: 16, resizeMode: 'contain' }}
+                />
                 <TagCataBagulhoText>Cata-Bagulho</TagCataBagulhoText>
               </TagCataBagulho>
 
               <TagLixoEletronico activeOpacity={0.7}>
-                <Image source={require('../../assets/batery.png')} style={{ width: 16, height: 16, resizeMode: 'contain' }} />
+                <Image
+                  source={require('../../assets/batery.png')}
+                  style={{ width: 16, height: 16, resizeMode: 'contain' }}
+                />
                 <TagLixoEletronicoText>Lixo Eletrônico</TagLixoEletronicoText>
               </TagLixoEletronico>
             </TagsRow>
@@ -136,11 +146,14 @@ export default function MapScreen() {
             <CurrentAddressContainer>
               <AddressTextWrapper>
                 <CurrentAddressLabel>Endereço</CurrentAddressLabel>
-                <CurrentAddressValue>{currentAddress}</CurrentAddressValue>
+                <CurrentAddressValue numberOfLines={1}>{currentAddress}</CurrentAddressValue>
               </AddressTextWrapper>
 
               <RouteButton activeOpacity={0.8}>
-                <Image source={require('../../assets/Route.png')} style={{ width: 24, height: 24, resizeMode: 'contain' }} />
+                <Image
+                  source={require('../../assets/Route.png')}
+                  style={{ width: 24, height: 24, resizeMode: 'contain' }}
+                />
               </RouteButton>
             </CurrentAddressContainer>
           </MiddleContainer>
@@ -166,7 +179,10 @@ export default function MapScreen() {
 
                 <UserInfoRow>
                   <UserName>Maria</UserName>
-                  <Image source={require('../../assets/MarIa.png')} style={{ width: 24, height: 24, borderRadius: 12 }} />
+                  <Image
+                    source={require('../../assets/MarIa.png')}
+                    style={{ width: 24, height: 24, borderRadius: 12 }}
+                  />
                 </UserInfoRow>
               </TopRow>
 
@@ -177,6 +193,7 @@ export default function MapScreen() {
 
         </PanelWrapper>
       </PanelContainer>
+
     </ScreenContainer>
   );
 }

@@ -1,71 +1,72 @@
-import React from 'react';
-import { StatusBar, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StatusBar, View, Image, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
-import { Svg, Path, } from 'react-native-svg';
-import imgmaria from "../../assets/imgmaria.png"
+import { Svg, Path } from 'react-native-svg';
+import imgmaria from "../../assets/imgmaria.png";
 import TagButton from "../../components/TagButton";
-import { Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+
+import { descobrirProximaColeta } from '../../utils/dateUtils';
 
 import {
   Container, ContentScroll, Header, HeaderTop, TagSuaRegiao, TagSuaRegiaoText,
   ProfileArea, ProfileName, AddressTitle, AddressSubtitle,
   CardsContainer, Card, CardBorderLeft, CardHeader, DotGreen, CardSubtitle,
-  IconBoxPurple, CardTitle, CardTime, TagsRow, TagCataBagulho, TagCataBagulhoText,
-  RowCards, SmallCard, SmallCardText, BottomNavContainer, WaveContainer, HeaderContent,
-  MarIAOwl
+  IconBoxPurple, CardTitle, CardTime, TagsRow, RowCards, SmallCard, SmallCardText,
+  BottomNavContainer, WaveContainer, HeaderContent, MarIAOwl
 } from './styles';
 
-
-
 export default function Home() {
-
-  const Navigation = useNavigation();
+  const navigation = useNavigation();
   const route = useRoute();
-  const cepData = route.params?.cepData;
 
-  // Validação de dados do CEP
-  const validateCepData = (data) => {
-    if (!data) {
-      console.warn('Home - Nenhum CEP fornecido, usando dados padrão');
-      return false;
+
+  const [info, setInfo] = useState(null);
+
+  useEffect(() => {
+
+    const dadosRecebidos = route.params?.info;
+    if (dadosRecebidos) {
+      setInfo(dadosRecebidos);
     }
+  }, [route.params]);
 
-    const requiredFields = ['logradouro', 'bairro', 'localidade', 'uf'];
-    const hasAllFields = requiredFields.every(field => data[field]);
 
-    if (!hasAllFields) {
-      console.warn('Home - CEP incompleto, campos faltando:', requiredFields.filter(f => !data[f]));
-      return false;
-    }
+  const addressTitle = info?.logradouro
+    ? `${info.logradouro}${info.numero ? `, ${info.numero}` : ''}`
+    : 'Aguardando dados...';
 
-    return true;
-  };
+  const addressSubtitle = info?.bairro
+    ? `${info.bairro}, São Paulo - SP`
+    : 'Digite seu CEP para começar';
 
-  const isValidData = validateCepData(cepData);
+  const dadosColeta = info?.dados_coleta;
 
-  console.log('Home - cepData recebido:', cepData);
-  console.log('Home - Validação de CEP:', isValidData);
+  const textoComum = dadosColeta?.comum
+    ? descobrirProximaColeta(dadosColeta.comum.dias)
+    : "Aguardando...";
+  const horarioComum = dadosColeta?.comum?.horario || "07:00 - 10:00";
 
-  const addressTitle = isValidData ? `${cepData.logradouro}, ${cepData.numero || ''}`.trim() : 'Rua Santa Archelia, 185';
-  const addressSubtitle = isValidData ? `${cepData.bairro}, ${cepData.localidade} - ${cepData.uf}` : 'Jardim Casa Blanca';
+  const textoReciclavel = dadosColeta?.reciclavel
+    ? descobrirProximaColeta(dadosColeta.reciclavel.dias)
+    : null;
 
-  console.log('Home - addressTitle:', addressTitle);
-  console.log('Home - addressSubtitle:', addressSubtitle);
+  const textoCataBagulho = dadosColeta?.cata_bagulho?.dia_texto || "---";
+  const horarioCataBagulho = dadosColeta?.cata_bagulho?.horario || "---";
+
   return (
     <Container>
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       <ContentScroll>
         <Header>
-
           <View style={{ position: 'absolute', left: -5, top: 5, zIndex: 3 }}>
             <Svg width="36" height="61" viewBox="0 0 36 61" fill="none">
               <Path d="M0 0H31C31 0 31.6541 22.7107 25.5 37.5C18.8202 53.5528 0 52.5 0 52.5V0Z" fill="#A997DF" />
             </Svg>
           </View>
 
-          <WaveContainer style={{ zIndex: 1 }}>
+          <WaveContainer style={{ zIndex: 0 }}>
             <Svg width="100%" height="210" viewBox="0 0 412 210" preserveAspectRatio="none">
               <Path d="M0 0H430V150.5C430 150.5 282.5 196.223 209.5 195C136.5 193.777 0 144.5 0 144.5V0Z" fill="#2A7F62" />
             </Svg>
@@ -77,25 +78,22 @@ export default function Home() {
             </Svg>
           </WaveContainer>
 
+
           <HeaderContent>
             <HeaderTop>
               <TagSuaRegiao><TagSuaRegiaoText>Sua região</TagSuaRegiaoText></TagSuaRegiao>
               <ProfileArea>
                 <ProfileName>Maria</ProfileName>
-                <Image source={require('../../assets/MarIa.png')} style={{ width: 24, height: 24, borderRadius: 12, }} />
+                <Image source={require('../../assets/MarIa.png')} style={{ width: 24, height: 24, borderRadius: 12 }} />
               </ProfileArea>
             </HeaderTop>
+
             <AddressTitle>{addressTitle}</AddressTitle>
-            <AddressSubtitle>{addressSubtitle}</AddressSubtitle>
+            <AddressSubtitle style={{ textTransform: 'capitalize' }}>{addressSubtitle}</AddressSubtitle>
           </HeaderContent>
         </Header>
 
         <CardsContainer style={{ marginTop: -70, zIndex: 1 }}>
-          <View style={{ position: 'absolute', left: 336, top: -20, zIndex: 0, }}>
-            <Svg width="40" height="61" viewBox="0 0 40 61" fill="none">
-              <Path d="M9.6732 19C17.2186 7.96853 35.6732 0 35.6732 0C35.6732 0 36.3273 22.7107 30.1732 37.5C23.4934 53.5528 4.67318 52.5 4.67318 52.5C4.67318 52.5 1.29518 31.2488 9.6732 19Z" fill="#A997DF" />
-            </Svg>
-          </View>
 
           <Card>
             <CardHeader>
@@ -105,58 +103,61 @@ export default function Home() {
                 <MaterialCommunityIcons name="truck-outline" size={20} color="#7B2CBF" />
               </IconBoxPurple>
             </CardHeader>
-            <CardTitle>Amanhã</CardTitle>
-            <CardTime>07:00 - 10:00</CardTime>
+
+            <CardTitle>{textoComum}</CardTitle>
+            <CardTime>Início às {horarioComum}</CardTime>
+
             <TagsRow>
-              <TagButton text="Lixo Comum" bgColor="#EAEAEA" textColor="#555" icon={<MaterialCommunityIcons name="trash-can-outline" size={14} color="#555" />} />
-              <TagButton text="Reciclável" bgColor="#D1F2EB" textColor="#00A86B" icon={<MaterialCommunityIcons name="recycle" size={14} color="#00A86B" />} />
+              <TagButton
+                text="Lixo Comum"
+                bgColor="#EAEAEA"
+                textColor="#555"
+                icon={<MaterialCommunityIcons name="trash-can-outline" size={14} color="#555" />}
+              />
+              {textoReciclavel === textoComum && (
+                <TagButton
+                  text="Reciclável"
+                  bgColor="#D1F2EB"
+                  textColor="#00A86B"
+                  icon={<MaterialCommunityIcons name="recycle" size={14} color="#00A86B" />}
+                />
+              )}
             </TagsRow>
           </Card>
 
           <CardBorderLeft>
             <CardHeader>
-              <TagCataBagulho><TagCataBagulhoText>Operação cata-bagulho</TagCataBagulhoText></TagCataBagulho>
-              <MaterialCommunityIcons name="sofa-outline" size={24} color="#7B2CBF" style={{ marginLeft: 'auto' }} />
+              <MaterialCommunityIcons name="sofa-outline" size={24} color="#7B2CBF" style={{ bottom: 2 }} />
+              <CardSubtitle style={{ marginLeft: 10 }}>CATA-BAGULHO</CardSubtitle>
             </CardHeader>
-            <CardTitle>Domingo</CardTitle>
-            <CardTime>07:00 - 10:00</CardTime>
+            <CardTitle>{textoCataBagulho}</CardTitle>
+            <CardTime>Horário: {horarioCataBagulho}</CardTime>
           </CardBorderLeft>
 
           <RowCards style={{ paddingHorizontal: 20 }}>
-            <SmallCard onPress={() => Navigation.navigate('Reminders', { cepData })}>
-              <View style={{ position: 'absolute', right: -5, top: -5, zIndex: -1 }}>
-                <Svg width="26" height="27" viewBox="0 0 26 27" fill="none">
-                  <Path d="M10.5152 15.8357C8.44313 18.7941 4.7738 19.7469 2.31958 17.9638C-0.710252 15.7625 0.0720633 16.3861 2.14418 13.4277C4.21629 10.4693 9.9055 10.984 12.3597 12.7671C14.7046 14.6386 12.5874 12.8773 10.5152 15.8357Z" fill="#B6A3EF" />
-                </Svg>
-              </View>
+            <SmallCard onPress={() => navigation.navigate('Reminders', { info })}>
               <Feather name="bell" size={26} color="#000" />
               <SmallCardText>Lembretes</SmallCardText>
             </SmallCard>
 
-
-            <SmallCard onPress={() => Navigation.navigate('NavigationMap', { cepData })}>
+            <SmallCard onPress={() => navigation.navigate('NavigationMap', { info })}>
               <Feather name="map" size={26} color="#000" />
               <SmallCardText>Mapa</SmallCardText>
             </SmallCard>
           </RowCards>
+
         </CardsContainer>
       </ContentScroll>
-
 
       <MarIAOwl source={imgmaria} style={{ width: 80, height: 80, resizeMode: 'contain' }} />
 
       <BottomNavContainer>
-        <MaterialCommunityIcons name="arrow-left" size={28} color="#81818E"
-          onPress={() => {
-            console.log('Voltando para CepFolder');
-            Navigation.navigate('CepFolder');
-          }} />
-        <MaterialCommunityIcons name="home" size={28} color="#81818E" />
-        <TouchableOpacity onPress={() => {
-          console.log('Navegando para Ad com cepData:', cepData);
-          Navigation.navigate('Ad', { cepData });
-        }}>
-          <Image source={require('../../assets/anuncio.png')} style={{ width: 28, height: 28, resizeMode: 'contain', }} />
+        <TouchableOpacity onPress={() => navigation.navigate('CepFolder')}>
+          <MaterialCommunityIcons name="arrow-left" size={28} color="#81818E" />
+        </TouchableOpacity>
+        <MaterialCommunityIcons name="home" size={28} color="#2A7F62" />
+        <TouchableOpacity onPress={() => navigation.navigate('Ad', { info })}>
+          <Image source={require('../../assets/anuncio.png')} style={{ width: 28, height: 28, resizeMode: 'contain' }} />
         </TouchableOpacity>
       </BottomNavContainer>
     </Container>

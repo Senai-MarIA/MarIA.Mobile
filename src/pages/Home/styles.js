@@ -143,9 +143,9 @@ export const IconBoxPurple = styled.View`
 `;
 
 export const CardTitle = styled.Text`
-  font-size: 32px;
+  font-size: 22px;
   font-family: 'Poppins_500Medium';
-  bottom: 14px;
+  bottom: 12px;
   font-weight: bold;
   color: #111;
 `;

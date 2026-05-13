@@ -1,4 +1,4 @@
-import { ContainerMission, TitleMission, TextSub, TextHero, BackPage, } from "./style";
+import { ContainerMission, TitleMission, TextSub, TextHero, BackPage, PlayButton, PlayButtonText } from "./style";
 import { Image, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute, } from '@react-navigation/native';
 
@@ -11,9 +11,12 @@ export default function Ad() {
                 <Image source={require('../../assets/backPage.png')} />
             </BackPage>
             <TitleMission>
-                Missão MarIA: <TextSub TouchableOpacity onPress={() => navigation.navigate('GameMaria')}>
-                    Jogue agora!!!</TextSub>
+                Missão MarIA:
             </TitleMission>
+
+            <PlayButton onPress={() => navigation.navigate('GameMaria')}>
+                <PlayButtonText>Jogue agora!!!</PlayButtonText>
+            </PlayButton>
 
 
             <TextHero>

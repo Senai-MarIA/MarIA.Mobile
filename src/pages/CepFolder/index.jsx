@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Platform, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { Platform, Alert, ActivityIndicator } from 'react-native';
 import { Path } from 'react-native-svg';
-import * as NavigationBar from 'expo-navigation-bar';
 import { useNavigation } from '@react-navigation/native';
+
+import { buscarCep } from '../../Services/Viacep';
+import { supabase } from '../../Services/supabaseClient';
 
 import {
   Container,
@@ -28,85 +30,70 @@ import {
   Image,
 } from './styles';
 
-export default function CepScreen() {
-
-  const Navigation = useNavigation();
+export default function CepFolder() {
   const [cep, setCep] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-
-      NavigationBar.setVisibilityAsync("hidden");
-
-      NavigationBar.setBehaviorAsync("overlay-swipe");
+  const formatCep = (text) => {
+    let cleaned = text.replace(/\D/g, '');
+    if (cleaned.length > 5) {
+      cleaned = `${cleaned.slice(0, 5)}-${cleaned.slice(5, 8)}`;
     }
-  }, []);
-
-  const formatCep = (value) => {
-    // Remove non-digits
-    const cleaned = value.replace(/\D/g, '');
-    // Format as XXXXX-XXX
-    if (cleaned.length <= 5) {
-      return cleaned;
-    } else {
-      return `${cleaned.slice(0, 5)}-${cleaned.slice(5, 8)}`;
-    }
-  };
-
-  const validateCep = (cep) => {
-    const cleaned = cep.replace(/\D/g, '');
-    return cleaned.length === 8;
+    return cleaned;
   };
 
   const handleSearch = async () => {
-    console.log('Botão pressionado - CEP digitado:', cep);
+    const cleanCep = cep.replace(/\D/g, '');
 
-    // Validar se o campo está vazio
-    if (!cep || cep.trim() === '') {
-      Alert.alert('Campo vazio', 'Por favor, digite um CEP antes de pesquisar.');
-      console.log('CEP vazio, validação falhou');
+    if (cleanCep.length < 8) {
+      Alert.alert("Aviso", "Por favor, introduza um CEP completo.");
       return;
     }
-
-    // Validar se tem 8 dígitos
-    if (!validateCep(cep)) {
-      Alert.alert('CEP Inválido', 'Por favor, insira um CEP válido com 8 dígitos.');
-      console.log('CEP inválido:', cep);
-      return;
-    }
-
-    const cleanedCep = cep.replace(/\D/g, '');
-    console.log('CEP validado:', cleanedCep);
 
     setLoading(true);
-    try {
-      const url = `https://viacep.com.br/ws/${cleanedCep}/json/`;
-      console.log('Fazendo requisição para:', url);
-      
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log('Resposta da API:', data);
 
-      if (data.erro) {
-        Alert.alert('CEP não encontrado', 'Verifique o CEP e tente novamente.');
+    try {
+      
+      const dadosEndereco = await buscarCep(cleanCep);
+
+      
+      const { data: supabaseData, error } = await supabase
+        .from('Coletas_Bairro')
+        .select('*')
+        .eq('cep', cleanCep)
+        .single();
+
+      if (error || !supabaseData) {
+        Alert.alert("Aviso", "Ainda não temos os horários de coleta para esta região.");
         setLoading(false);
         return;
       }
 
-      console.log('CEP encontrado, navegando para Home com dados:', data);
-      Navigation.navigate('Home', { cepData: data });
-    } catch (error) {
-      console.error('Erro na requisição:', error);
-      Alert.alert('Erro', 'Não foi possível consultar o CEP. Verifique sua conexão com a internet.');
+      
+      const payloadInfo = {
+        logradouro: dadosEndereco.logradouro,
+        bairro: dadosEndereco.bairro,
+        cidade: dadosEndereco.cidade,
+        uf: dadosEndereco.uf,
+        cep: dadosEndereco.cep,
+        dados_coleta: supabaseData.dados_coleta,
+      };
+
+      
+      navigation.navigate('Home', { info: payloadInfo });
+
+    } catch (err) {
+      Alert.alert("Ops!", err.message || "Ocorreu um erro ao buscar as informações.");
+      console.error(err);
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <Container>
-      <KeyBoardBehavior behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
-
+      <KeyBoardBehavior behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
         <WavesBackground>
           <DarkWaveWrapper>
@@ -128,7 +115,6 @@ export default function CepScreen() {
           </LightWaveWrapper>
         </WavesBackground>
 
-
         <TopLeafWrapper>
           <TopLeafSvg>
             <Path
@@ -147,24 +133,25 @@ export default function CepScreen() {
           </BottomLeafSvg>
         </BottomLeafWrapper>
 
-
         <Content>
           <Title>Onde você mora?</Title>
           <Subtitle>Qual seu CEP?</Subtitle>
 
           <Input
-            placeholder="CEP"
+            placeholder="00000-000"
+            placeholderTextColor="#ffffff80"
             keyboardType="numeric"
             maxLength={9}
             value={cep}
             onChangeText={(text) => setCep(formatCep(text))}
           />
 
-          <Button onPress={() => {
-            console.log('Botão pressionado');
-            handleSearch();
-          }} disabled={loading}>
-            <ButtonText>{loading ? 'Pesquisando...' : 'Pesquisar'}</ButtonText>
+          <Button onPress={handleSearch} disabled={loading}>
+            {loading ? (
+              <ActivityIndicator color="#FFF" />
+            ) : (
+              <ButtonText>Pesquisar</ButtonText>
+            )}
           </Button>
         </Content>
 
