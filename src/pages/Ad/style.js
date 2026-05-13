@@ -1,41 +1,50 @@
 import styled from 'styled-components/native';
 
-
-
 export const ContainerMission = styled.View`
-flex: 1;
-background-color: #000000;
-justify-content: center;
-align-items: center;
-`
+  flex: 1;
+  background-color: #000000;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const BackPage = styled.TouchableOpacity`
-margin-right: 320px;
-bottom: 20px;
+  margin-right: 320px;
+  bottom: 20px;
 `;
 
 export const TitleMission = styled.Text`
-font-size: 32px;
-text-align: center;
-width: 275px;
-font-family: 'Poppins_400Regular';
-color: #FFFFFF;
+  font-size: 32px;
+  text-align: center;
+  width: 275px;
+  font-family: 'Poppins_400Regular';
+  color: #ffffff;
 `;
 
 export const TextSub = styled.Text`
-color: #FF00C8;
-text-decoration: underline;
-font-family: 'Poppins_400Regular';
-`
+  color: #ff00c8;
+  text-decoration: underline;
+  font-family: 'Poppins_400Regular';
+`;
 
 export const TextHero = styled.Text`
-padding: 52px;
-font-size: 20px;
-font-family: 'Poppins_400Regular';
-width: 393px;
-text-align: center;
-color: #FFFFFF;
-`
-export const OpenGame = styled.TouchableOpacity`
+  padding: 52px;
+  font-size: 20px;
+  font-family: 'Poppins_400Regular';
+  width: 393px;
+  text-align: center;
+  color: #ffffff;
+`;
 
-`
+export const OpenGame = styled.TouchableOpacity``;
+
+
+export const PlayButton = styled.TouchableOpacity`
+  background-color: transparent;
+`;
+
+export const PlayButtonText = styled.Text`
+  color: #ff00c8;
+  text-decoration: underline;
+  font-size: 32px;
+  font-family: 'Poppins_400Regular';
+`;

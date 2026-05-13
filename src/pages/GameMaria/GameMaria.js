@@ -1,34 +1,30 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation } from '@react-navigation/native';
 import { Container, CloseButton, CloseButtonText } from './style';
 
 export default function GameMaria() {
-  
   const navigation = useNavigation();
 
   useEffect(() => {
-    // Bloqueia a orientação para paisagem
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE); 
+    // Bloqueia orientação para paisagem ao entrar
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+
     return () => {
-      // Desbloqueia a orientação ao sair da tela
-      ScreenOrientation.unlockAsync();
+      // Desbloqueia ao sair — apenas uma vez
       ScreenOrientation.unlockAsync();
     };
   }, []);
 
   return (
-    <View style={styles.container}>
-      <StatusBar hidden />
-      
-      <WebView 
-        source={{ uri: 'https://mar-ia-mobile-web.vercel.app/' }}
     <Container>
+      <StatusBar hidden />
+
       <WebView
         source={{ uri: 'https://mar-ia-eco-game.vercel.app/' }}
-        style={{ flex: 1 }}
+        style={styles.game}
         injectedJavaScript={`
           (function setupTouchMapping() {
             const canvas = document.querySelector('canvas');
@@ -36,16 +32,16 @@ export default function GameMaria() {
               setTimeout(setupTouchMapping, 100);
               return;
             }
-            
+
             const scaleX = window.innerWidth / 1366;
             const scaleY = window.innerHeight / 768;
             const scale = Math.min(scaleX, scaleY);
-            
+
             const scaledWidth = 1366 * scale;
             const scaledHeight = 768 * scale;
             const offsetX = (window.innerWidth - scaledWidth) / 2;
             const offsetY = (window.innerHeight - scaledHeight) / 2;
-            
+
             canvas.style.width = scaledWidth + 'px';
             canvas.style.height = scaledHeight + 'px';
             canvas.style.position = 'absolute';
@@ -53,24 +49,24 @@ export default function GameMaria() {
             canvas.style.top = offsetY + 'px';
             canvas.style.background = '#000';
             canvas.style.imageRendering = 'pixelated';
-            
+
             document.body.style.margin = '0';
             document.body.style.padding = '0';
             document.body.style.overflow = 'hidden';
             document.body.style.background = '#000';
             document.body.style.width = '100vw';
             document.body.style.height = '100vh';
-            
+
             document.documentElement.style.margin = '0';
             document.documentElement.style.padding = '0';
             document.documentElement.style.overflow = 'hidden';
             document.documentElement.style.background = '#000';
-            
+
             const mapCoordinates = (clientX, clientY) => ({
               x: (clientX - offsetX) / scale,
               y: (clientY - offsetY) / scale
             });
-            
+
             const createMouseEvent = (type, clientX, clientY) => {
               const coords = mapCoordinates(clientX, clientY);
               return new MouseEvent(type, {
@@ -83,36 +79,34 @@ export default function GameMaria() {
                 screenY: coords.y
               });
             };
-            
+
             document.addEventListener('touchstart', (e) => {
               if (!e.target.closest('canvas')) return;
               const touch = e.touches[0];
               canvas.dispatchEvent(createMouseEvent('mousedown', touch.clientX, touch.clientY));
-            }, {capture: true});
-            
+            }, { capture: true });
+
             document.addEventListener('touchmove', (e) => {
               if (!e.target.closest('canvas')) return;
               const touch = e.touches[0];
               canvas.dispatchEvent(createMouseEvent('mousemove', touch.clientX, touch.clientY));
-            }, {capture: true});
-            
+            }, { capture: true });
+
             document.addEventListener('touchend', (e) => {
               if (!e.target.closest('canvas')) return;
               canvas.dispatchEvent(createMouseEvent('mouseup', 0, 0));
-            }, {capture: true});
-            
+            }, { capture: true });
+
             window.addEventListener('resize', setupTouchMapping);
           })();
-          
+
           true;
         `}
         scalesPageToFit={true}
         javaScriptEnabled={true}
         domStorageEnabled={true}
-        style={styles.game}
         scrollEnabled={false}
         overScrollMode="never"
-        pointerEvents={true}
       />
 
       <CloseButton onPress={() => navigation.goBack()}>
@@ -123,10 +117,6 @@ export default function GameMaria() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
   game: {
     flex: 1,
   },
