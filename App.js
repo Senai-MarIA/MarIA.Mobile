@@ -30,14 +30,14 @@ export default function App() {
     Poppins_700Bold
   });
 
-  // Configuração para esconder a barra de baixo no Android
+ 
   useEffect(() => {
     async function hideNavigationBar() {
       if (Platform.OS === 'android') {
-        // Esconde os botões (voltar, home, abas)
+      
         await NavigationBar.setVisibilityAsync('hidden');
         
-        // Faz com que a barra só apareça com swipe e suma logo depois
+     
         await NavigationBar.setBehaviorAsync('overlay-swipe');
       }
     }
@@ -49,7 +49,7 @@ export default function App() {
 
   return (
     <ContainerApp>
-      {/* Esconde a barra de cima (hora, bateria) */}
+     
       <StatusBar hidden={true} />
       
       <NavigationContainer>

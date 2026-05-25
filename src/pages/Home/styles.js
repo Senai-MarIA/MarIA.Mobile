@@ -86,6 +86,7 @@ export const AddressSubtitle = styled.Text`
   color: #E0F2E9;
   font-size: 14px;
   margin-top: 2px;
+  margin-left: 45px;
   font-family: 'Poppins_400Regular';
 `;
 
@@ -100,6 +101,7 @@ export const Card = styled.View`
   border-radius: 20px;
   padding: 29px;
   margin-bottom: 20px;
+  top: 14px;
   elevation: 5;
   shadow-color: #000;
   shadow-offset: 0px 4px;

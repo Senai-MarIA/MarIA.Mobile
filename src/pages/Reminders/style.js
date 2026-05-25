@@ -10,15 +10,16 @@ justify-content: center;
 align-items: center;
 flex-direction: row;
 justify-content: space-around;
-padding:50px 43px;
+padding:50px 25px;
 gap: 29px;
 `
 
 export const ContentTitles = styled.View`
+gap: 5px;
 `;
 
 export const Title = styled.Text`
-font-size: 20px;
+font-size: 15px;
 font-family: 'Poppins_600SemiBold';
 `;
 
