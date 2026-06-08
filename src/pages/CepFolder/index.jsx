@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { buscarCep } from '../../Services/Viacep';
 import { supabase } from '../../Services/supabaseClient';
+import { gerarDadosColeta } from '../../Services/gerarColeta';
 
 import {
   Container,
@@ -54,34 +55,67 @@ export default function CepFolder() {
     setLoading(true);
 
     try {
-      
-      const dadosEndereco = await buscarCep(cleanCep);
-
-      
-      const { data: supabaseData, error } = await supabase
+      // 1. Supabase primeiro — evita chamar ViaCEP se já tiver os dados
+      const { data: supabaseData, error: supabaseError } = await supabase
         .from('Coletas_Bairro')
         .select('*')
         .eq('cep', cleanCep)
         .single();
 
-      if (error || !supabaseData) {
-        Alert.alert("Aviso", "Ainda não temos os horários de coleta para esta região.");
-        setLoading(false);
+      if (!supabaseError && supabaseData) {
+        navigation.navigate('Home', {
+          info: {
+            logradouro: supabaseData.logradouro,
+            bairro: supabaseData.bairro,
+            cidade: supabaseData.cidade,
+            uf: supabaseData.uf,
+            cep: supabaseData.cep,
+            dados_coleta: supabaseData.dados_coleta,
+          },
+        });
         return;
       }
 
-      
-      const payloadInfo = {
-        logradouro: dadosEndereco.logradouro,
-        bairro: dadosEndereco.bairro,
-        cidade: dadosEndereco.cidade,
-        uf: dadosEndereco.uf,
-        cep: dadosEndereco.cep,
-        dados_coleta: supabaseData.dados_coleta,
-      };
+      if (supabaseError && supabaseError.code !== 'PGRST116') {
+        throw new Error('Erro ao consultar o banco de dados.');
+      }
 
-      
-      navigation.navigate('Home', { info: payloadInfo });
+      // 2. Não encontrado no Supabase — busca no ViaCEP
+      const dadosEndereco = await buscarCep(cleanCep);
+
+      if (dadosEndereco.uf !== 'SP') {
+        Alert.alert("Aviso", "Por enquanto atendemos apenas CEPs do estado de São Paulo.");
+        return;
+      }
+
+      // 3. Gera dados de coleta e salva tudo no Supabase
+      const dadosColeta = gerarDadosColeta(cleanCep);
+
+      const { error: insertError } = await supabase
+        .from('Coletas_Bairro')
+        .insert({
+          cep: cleanCep,
+          logradouro: dadosEndereco.logradouro,
+          bairro: dadosEndereco.bairro,
+          cidade: dadosEndereco.cidade,
+          uf: dadosEndereco.uf,
+          dados_coleta: dadosColeta,
+        });
+
+      if (insertError) {
+        console.error('Erro ao salvar coleta no Supabase:', insertError);
+      }
+
+      navigation.navigate('Home', {
+        info: {
+          logradouro: dadosEndereco.logradouro,
+          bairro: dadosEndereco.bairro,
+          cidade: dadosEndereco.cidade,
+          uf: dadosEndereco.uf,
+          cep: dadosEndereco.cep,
+          dados_coleta: dadosColeta,
+        },
+      });
 
     } catch (err) {
       Alert.alert("Ops!", err.message || "Ocorreu um erro ao buscar as informações.");
